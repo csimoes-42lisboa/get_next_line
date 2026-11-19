@@ -6,7 +6,7 @@
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:45:49 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/18 18:40:57 by csimoes          ###   ########.fr       */
+/*   Updated: 2026/11/19 10:42:46 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
-	size_t	i;
 
 	if (!s)
 		return (NULL);
@@ -76,9 +75,26 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sub = malloc(sizeof(char) * (len + 1));
 	if (!sub)
 		return (NULL);
-	i = 0;
-	while (i < len)
-		sub[i++] = s[start++];
+	ft_memcpy(sub, &s[start], len);
 	sub[len] = '\0';
 	return (sub);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*d;
+	const unsigned char	*s;
+
+	if (!dest && !src)
+		return (NULL);
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }
