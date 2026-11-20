@@ -6,7 +6,7 @@
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:24:30 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/19 10:42:55 by csimoes          ###   ########.fr       */
+/*   Updated: 2026/11/20 19:07:33 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_next_line(int fd);
 
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoingnl(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

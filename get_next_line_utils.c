@@ -6,7 +6,7 @@
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:45:49 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/19 10:42:46 by csimoes          ###   ########.fr       */
+/*   Updated: 2026/11/20 22:28:59 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ size_t	ft_strlen(const char *str)
 	return (n);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchrgnl(const char *s, int c)
 {
 	unsigned char	target;
 
+	if (!s)
+		return (NULL);
 	target = (unsigned char)c;
 	while ((unsigned char)*s != target)
 	{
@@ -38,20 +40,24 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *)s);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoingnl(char const *s1, char const *s2)
 {
 	char	*joined;
 	size_t	len1;
 	size_t	len2;
 
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
-	len1 = ft_strlen(s1);
+	if (!s1)
+		len1 = 0;
+	else
+		len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	joined = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!joined)
 		return (NULL);
-	ft_memcpy(joined, s1, len1);
+	if (len1 > 0)
+		ft_memcpy(joined, s1, len1);
 	ft_memcpy(&joined[len1], s2, len2);
 	joined[len1 + len2] = '\0';
 	return (joined);
