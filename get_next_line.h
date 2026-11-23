@@ -6,7 +6,7 @@
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:24:30 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/20 19:07:33 by csimoes          ###   ########.fr       */
+/*   Updated: 2026/11/23 23:11:38 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@
 #  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line(int fd);
+typedef struct s_stash
+{
+	char	*data;
+	size_t	len;
+	size_t	cap;
+}	t_stash;
 
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoingnl(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
+int		gnl_has_nl(const t_stash *st);
+int		gnl_ensure_cap(t_stash *st, size_t needed);
+void	gnl_append(t_stash *st, const char *src, size_t n);
+void	gnl_reset(t_stash *st);
 
 #endif

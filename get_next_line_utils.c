@@ -5,102 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/18 13:45:49 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/22 11:37:01 by csimoes          ###   ########.fr       */
+/*   Created: 2026/11/23 22:35:47 by csimoes           #+#    #+#             */
+/*   Updated: 2026/11/23 23:11:35 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+int	gnl_has_nl(const t_stash *st)
 {
-	size_t	n;
+	size_t	i;
 
-	n = 0;
-	while (str[n])
+	if (!st || !st->data)
+		return (0);
+	i = 0;
+	while (i < st->len)
 	{
-		n++;
+		if (st->data[i] == '\n')
+			return (1);
+		i++;
 	}
-	return (n);
+	return (0);
 }
 
-char	*ft_strchrgnl(const char *s, int c)
+int	gnl_ensure_cap(t_stash *st, size_t needed)
 {
-	unsigned char	target;
+	char	*next;
+	size_t	new_cap;
+	size_t	i;
 
-	if (!s)
-		return (NULL);
-	target = (unsigned char)c;
-	while ((unsigned char)*s != target)
+	if (needed <= st->cap && st->data)
+		return (1);
+	new_cap = st->cap;
+	if (new_cap == 0)
+		new_cap = 64;
+	while (new_cap < needed)
+		new_cap *= 2;
+	next = malloc(new_cap);
+	if (!next)
+		return (0);
+	i = 0;
+	while (i < st->len && st->data)
 	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
+		next[i] = st->data[i];
+		i++;
 	}
-	return ((char *)s);
+	free(st->data);
+	st->data = next;
+	st->cap = new_cap;
+	return (1);
 }
 
-char	*ft_strjoingnl(char const *s1, char const *s2)
+void	gnl_append(t_stash *st, const char *src, size_t n)
 {
-	char	*joined;
-	size_t	len1;
-	size_t	len2;
+	size_t	i;
 
-	if (!s2)
-		return (NULL);
-	if (!s1)
-		len1 = 0;
-	else
-		len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	joined = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!joined)
-		return (NULL);
-	if (len1 > 0)
-		ft_memcpy(joined, s1, len1);
-	ft_memcpy(&joined[len1], s2, len2);
-	joined[len1 + len2] = '\0';
-	return (joined);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-	{
-		sub = malloc(1);
-		if (sub)
-			*sub = 0;
-		return (sub);
-	}
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	sub = malloc(sizeof(char) * (len + 1));
-	if (!sub)
-		return (NULL);
-	ft_memcpy(sub, &s[start], len);
-	sub[len] = '\0';
-	return (sub);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t				i;
-	unsigned char		*d;
-	const unsigned char	*s;
-
-	if (!dest && !src)
-		return (NULL);
-	d = (unsigned char *)dest;
-	s = (const unsigned char *)src;
 	i = 0;
 	while (i < n)
 	{
-		d[i] = s[i];
+		st->data[st->len] = src[i];
+		st->len++;
 		i++;
 	}
-	return (dest);
+	st->data[st->len] = '\0';
+}
+
+void	gnl_reset(t_stash *st)
+{
+	if (!st)
+		return ;
+	free(st->data);
+	st->data = NULL;
+	st->len = 0;
+	st->cap = 0;
 }
