@@ -6,17 +6,15 @@
 /*   By: csimoes <csimoes@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:24:30 by csimoes           #+#    #+#             */
-/*   Updated: 2026/11/23 23:11:38 by csimoes          ###   ########.fr       */
+/*   Updated: 2026/11/28 18:23:49 by csimoes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
